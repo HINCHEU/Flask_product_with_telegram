@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from datetime import date, datetime
 import requests
-from werkzeug.utils import secure_filename
 import os
 import sqlite3
 import base64
@@ -201,23 +200,6 @@ def edit_product():
 @app.route('/check_out', methods =['POST','GET'])
 def check_out():
     #Check out View
-    # product_id = request.args.get('id')
-    # qty = request.args.get('qty')
-    # cursor.execute("SELECT * FROM product WHERE id=?", (product_id,))
-    # row = cursor.fetchone()
-    # if row:
-    #     current_product = {
-    #         'id': row[0],
-    #         'title': row[1],
-    #         'price': row[3],
-    #         'description': row[4],
-    #         'category': row[5],
-    #         'image': row[6],
-    #         'qty': row[7],
-    #     }
-    #     return render_template('check_out.html', current_product=current_product, qty=qty)
-    # else:
-    #     return "Product not found", 404
     card_product()
     return render_template('check_out.html', current_product=product_cart )
 
