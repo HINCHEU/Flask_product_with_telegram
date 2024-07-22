@@ -1,0 +1,140 @@
+{% include "head.html" %}
+
+<body>
+    <!-- HEADER -->
+    <header>
+
+        <!-- MAIN HEADER -->
+        <div id="header">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <!-- LOGO -->
+                    <div class="col-md-3">
+                        <div class="header-logo">
+                            <a href="#" class="logo">
+                                <img src="static/img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /LOGO -->
+
+                    <!-- SEARCH BAR -->
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+
+                                <input class="input" placeholder="Search here">
+                                <button class="search-btn">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /SEARCH BAR -->
+
+
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+    <!-- /HEADER -->
+
+    <!-- NAVIGATION -->
+    {% include "header.html" %}
+    <!-- /NAVIGATION -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Edit Product : {{current_product.title}}</h3>
+                    <form action="product_update" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="id" value="{{ current_product.id }}">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title"
+                                        value="{{ current_product.title }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" name="description"
+                                        rows="3">{{ current_product.description }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price"
+                                        value="{{ current_product.price }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="qty" name="qty"
+                                        value="{{ current_product.qty }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select class="form-control" id="category" name="category">
+                                        <option value="Laptop" {% if current_product.category=="Laptop" %}selected{%
+                                            endif %}>Laptop</option>
+                                        <option value="Computer Part" {% if current_product.category=="Computer Part"
+                                            %}selected{% endif %}>Computer Part</option>
+                                        <option value="Accessory" {% if current_product.category=="Accessory"
+                                            %}selected{% endif %}>Accessory</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="product-image" class="col-form-label">Product Image:</label>
+                                    <input type="file" id="product-image" name="file" class="form-control-file"
+                                        accept="image/*">
+                                    <br>
+                                    <img id="product-image-preview"
+                                        src="static/image/product/{{ current_product.image }}" alt="Product Image"
+                                        class="mt-2" style="max-width: 50%;">
+                                    <input type="hidden" id="croppedImage" name="cropped_image" required>
+                                    <br>
+                                    <button id="crop-button" type="button" class="btn btn-primary mt-2">
+                                        <i class="fas fa-crop">Crop</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12"
+                                style="display: flex; justify-content: space-between; margin-top: 20px;">
+                                <div>
+                                    <button href="/product_management" class="btn btn-warning">Cancel</button>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-danger">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <!-- Products tab & slick -->
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+
+    <!-- NEWSLETTER -->
+    {% include "newletter.html" %}
+
+    <!-- jQuery Plugins -->
+    {% include "footer.html" %}
+
+</body>
+
+</html>

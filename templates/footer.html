@@ -1,0 +1,103 @@
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/slick.min.js"></script>
+<script src="static/js/nouislider.min.js"></script>
+<script src="static/js/jquery.zoom.min.js"></script>
+<script src="static/js/main.js"></script>
+<!-- Include Cropper.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+<script>
+    // const productImageInput = document.getElementById('product-image');
+    // const productImagePreview = document.getElementById('product-image-preview');
+
+    // productImageInput.addEventListener('change', (e) => {
+    //     const file = productImageInput.files[0];
+    //     const reader = new FileReader();
+
+    //     reader.onload = (event) => {
+    //         productImagePreview.src = event.target.result;
+    //     };
+
+    //     reader.readAsDataURL(file);
+    // });
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+
+
+
+        // Handle delete button click
+        $('.delete-product-btn').click(function () {
+            const productId = $(this).data('id'); // Get product ID from button attribute
+            $('#confirmDelete').data('id', productId); // Set product ID to confirm button data attribute
+        });
+
+        // Handle confirm delete button click
+        $('#confirmDelete').click(function () {
+            const productId = $(this).data('id'); // Get product ID from data attribute
+
+            // Send AJAX request to delete product using the product ID
+            $.ajax({
+                url: '/product_delete?id=' + productId,
+                type: 'POST',
+                success: function () {
+                    $('#deleteModal').modal('hide'); // Hide the modal
+                    $('#successMessage').text('Product deleted successfully.');
+                    $('#successModal').modal('show'); // Show success modal
+                    setTimeout(() => {
+                        window.location.href = '/product_management'; // Redirect back to product management page
+                    }, 2000);
+                },
+                error: function (error) {
+                    $('#deleteModal').modal('hide'); // Hide the modal
+                    $('#errorMessage').text('Error deleting product: ' + error.responseText);
+                    $('#errorModal').modal('show'); // Show error modal
+                }
+            });
+        });
+    });
+
+</script>
+<!-- set qty -->
+<!-- croper -->
+<script>
+    const productImageInput = document.getElementById('product-image');
+    const productImagePreview = document.getElementById('product-image-preview');
+    const cropButton = document.getElementById('crop-button');
+    const croppedImageInput = document.getElementById('croppedImage');
+    let cropper;
+
+    productImageInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            productImagePreview.src = event.target.result;
+            if (cropper) {
+                cropper.destroy();
+            }
+            cropper = new Cropper(productImagePreview, {
+                aspectRatio: 1 / 1,
+                viewMode: 1,
+                autoCropArea: 1,
+            });
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    cropButton.addEventListener('click', function () {
+        const canvas = cropper.getCroppedCanvas();
+        if (!canvas) {
+            return;
+        }
+        const croppedImage = canvas.toDataURL('image/png');
+        croppedImageInput.value = croppedImage;
+        productImagePreview.src = croppedImage;
+        cropper.destroy();
+    });
+</script>

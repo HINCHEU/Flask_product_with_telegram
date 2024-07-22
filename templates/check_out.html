@@ -1,0 +1,150 @@
+{% include "head.html" %}
+
+<body>
+	<!-- HEADER -->
+	<header>
+		<!-- MAIN HEADER -->
+		<div id="header">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- LOGO -->
+					<div class="col-md-3">
+						<div class="header-logo">
+							<a href="/" class="logo">
+								<img src="static/img/logo.png" alt="">
+							</a>
+						</div>
+					</div>
+					<!-- /LOGO -->
+
+					<!-- SEARCH BAR -->
+					<div class="col-md-6">
+						<div class="header-search">
+							<form>
+								<input class="input" placeholder="Search here">
+								<button class="search-btn">Search</button>
+							</form>
+						</div>
+					</div>
+					<!-- /SEARCH BAR -->
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- /MAIN HEADER -->
+	</header>
+	<!-- /HEADER -->
+
+	<!-- NAVIGATION -->
+	{% include "header.html" %}
+	<!-- /NAVIGATION -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-7 col-sm-12 mt-2">
+					<div class="table-responsive">
+						<h3>Product Information</h3>
+						<table class="table table-striped table-border">
+							<thead style="background-color: blue;color: white;">
+								<tr>
+									<th>No.</th>
+									<th>Name</th>
+									<th>Quantity</th>
+									<th>Price</th>
+									<th>Sub Total</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								{%if current_product %}
+								{% for item in current_product %}
+								<tr>
+									<td>{{loop.index}}</td>
+									<td>{{ item.title }}</td>
+									<td>
+										<input type="number" id="quantity-input" name="qty"
+											class="form-control quantity-input" value="1" min="0"
+											onchange="updateSubtotal()">
+									</td>
+									<td id="product-price">{{ item.price }}</td>
+									<td id="subtotal">{{ item.price }}</td>
+								</tr>
+								{% endfor %}
+								{% else %}
+								<tr>
+									<th>
+										There is no product in your card.
+									</th>
+								<tr>
+									{% endif %}
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-5 col-sm-12 mt-2">
+					<h3>Customer Information</h3>
+					<form method="POST" action="/submit_order">
+						<div class="mb-3">
+							<label for="fullname">Full Name</label>
+							<input type="text" name="fullname" id="fullname" class="form-control" required>
+
+						</div>
+						<div class="mb-3">
+							<label for="email">Email Address</label>
+							<input type="email" name="email" id="email" class="form-control" required>
+						</div>
+						<div class="mb-3">
+							<label for="phone">Phone</label>
+							<input type="text" name="phone" id="phone" class="form-control" required>
+						</div>
+
+						<br>
+
+						<button type="submit" class="btn btn-primary float-right mt-2">Submit Order</button>
+					</form>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+
+	<!-- NEWSLETTER -->
+	{% include "newletter.html" %}
+	<!-- /NEWSLETTER -->z
+
+	<!-- jQuery Plugins -->
+	{% include "footer.html" %}
+	<script>
+		function updateSubtotal() {
+			const quantity = document.getElementById('quantity-input').value;
+			const price = parseFloat(document.getElementById('product-price').innerText);
+			const subtotal = quantity * price;
+			document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+
+			// Update hidden input field for quantity
+			document.getElementById('form-quantity-input').value = quantity;
+			updateCart();
+		}
+		function updateCart() {
+			const quantityInputs = document.querySelectorAll('#quantity-input');
+			quantityInputs.forEach((input) => {
+				const quantity = parseInt(input.value);
+				if (quantity <= 0) {
+					input.parentElement.parentElement.remove();
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

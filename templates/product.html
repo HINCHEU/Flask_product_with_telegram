@@ -1,0 +1,141 @@
+{% include "head.html" %}
+
+<body>
+	<!-- HEADER -->
+	<header>
+
+		<!-- MAIN HEADER -->
+		<div id="header">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- LOGO -->
+					<div class="col-md-3">
+						<div class="header-logo">
+							<a href="#" class="logo">
+								<img src="static/img/logo.png" alt="">
+							</a>
+						</div>
+					</div>
+					<!-- /LOGO -->
+
+					<!-- SEARCH BAR -->
+					<div class="col-md-6">
+						<div class="header-search">
+							<form>
+
+								<input class="input" placeholder="Search here">
+								<button class="search-btn">Search</button>
+							</form>
+						</div>
+					</div>
+					<!-- /SEARCH BAR -->
+
+
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- /MAIN HEADER -->
+	</header>
+	<!-- /HEADER -->
+
+	<!-- NAVIGATION -->
+	{% include "header.html" %}
+	<!-- /NAVIGATION -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="products-tabs">
+							<!-- tab -->
+							<div id="tab1" class="tab-pane active">
+								<div class="products-slick" data-nav="#slick-nav-1">
+									{% for item in products %}
+									<!-- product -->
+									<div class="product">
+										<div class="product-img">
+											{% if item.image is none %}
+											<img src="/static/image/cat.png" alt="">
+											{% else %}
+											<img src="/static/image/product/{{ item.image }}" alt="">
+											{% endif %}
+
+											<div class="product-label">
+												<span class="sale">-30%</span>
+												<span class="new">NEW</span>
+											</div>
+										</div>
+										<div class="product-body">
+											<p class="product-category">Category</p>
+											<h3 class="product-name"><a href="#">{{ item.title }}</a></h3>
+											<h4 class="product-price">{{ item.price }} $<del
+													class="product-old-price">{{((item.price)/7*10)|round|int}} $</del>
+											</h4>
+											<div class="product-rating">
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</div>
+
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn">
+												<a href="/product_detail?id={{ item.id }}">
+													<i class=" fafa-shopping-cart">View More</i>
+												</a>
+											</button>
+										</div>
+									</div>
+									<!-- /product -->
+									{% endfor %}
+
+
+
+									<!-- product -->
+
+									<!-- /product -->
+
+									<!-- product -->
+
+									<!-- /product -->
+
+									<!-- product -->
+
+									<!-- /product -->
+
+									<!-- product -->
+
+									<!-- /product -->
+								</div>
+								<div id="slick-nav-1" class="products-slick-nav"></div>
+							</div>
+							<!-- /tab -->
+						</div>
+					</div>
+				</div>
+				<!-- Products tab & slick -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+
+	<!-- NEWSLETTER -->
+	{% include "newletter.html" %}
+
+	<!-- jQuery Plugins -->
+	{% include "footer.html" %}
+
+</body>
+
+</html>

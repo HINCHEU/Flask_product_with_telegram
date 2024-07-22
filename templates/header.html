@@ -1,0 +1,23 @@
+<nav id="navigation">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav col-md-12 ">
+                <li class="{% if request.path == '/' %}active{% endif %}"><a href="/">Home</a></li>
+                <li class="{% if request.path == '/product' %}active{% endif %}"><a href="/product">Product</a></li>
+                <li
+                    class="{% if request.path == '/product_management' or (request.path.startswith('/product_edit') and request.args.get('id')) %}active{% endif %}">
+                    <a href="/product_management">Manage Product</a>
+                </li>
+                <li class="{% if request.path == '/check_out' %}active{% endif %}"><a href="/check_out">Cart</a></li>
+                <li class="{% if request.path == '/about' %}active{% endif %}"><a href="/about">About Us</a></li>
+                <li class="{% if request.path == '/contact' %}active{% endif %}"><a href="/contact">Contact</a></li>
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
