@@ -4,32 +4,48 @@
 <script src="static/js/nouislider.min.js"></script>
 <script src="static/js/jquery.zoom.min.js"></script>
 <script src="static/js/main.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 <!-- Include Cropper.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-<script>
-    // const productImageInput = document.getElementById('product-image');
-    // const productImagePreview = document.getElementById('product-image-preview');
-
-    // productImageInput.addEventListener('change', (e) => {
-    //     const file = productImageInput.files[0];
-    //     const reader = new FileReader();
-
-    //     reader.onload = (event) => {
-    //         productImagePreview.src = event.target.result;
-    //     };
-
-    //     reader.readAsDataURL(file);
-    // });
-
-
-</script>
 
 <script>
     $(document).ready(function () {
         $('#myTable').DataTable();
 
+        // Handle delete button click
+        $('.delete-product-btn').click(function () {
+            const productId = $(this).data('id'); // Get product ID from button attribute
+            $('#confirmDelete').data('id', productId); // Set product ID to confirm button data attribute
+        });
 
+        // Handle confirm delete button click
+        $('#confirmDelete').click(function () {
+            const productId = $(this).data('id'); // Get product ID from data attribute
 
+            // Send AJAX request to delete product using the product ID
+            $.ajax({
+                url: '/product_delete?id=' + productId,
+                type: 'POST',
+                success: function () {
+                    $('#deleteModal').modal('hide'); // Hide the modal
+                    $('#successMessage').text('Product deleted successfully.');
+                    $('#successModal').modal('show'); // Show success modal
+                    setTimeout(() => {
+                        window.location.href = '/product_management'; // Redirect back to product management page
+                    }, 2000);
+                },
+                error: function (error) {
+                    $('#deleteModal').modal('hide'); // Hide the modal
+                    $('#errorMessage').text('Error deleting product: ' + error.responseText);
+                    $('#errorModal').modal('show'); // Show error modal
+                }
+            });
+        });
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
         // Handle delete button click
         $('.delete-product-btn').click(function () {
             const productId = $(this).data('id'); // Get product ID from button attribute
